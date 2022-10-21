@@ -1,6 +1,6 @@
 import Gasto from "./Gasto"
 
-const ListadoGastos = ({ gastos, formatearFecha }) => {
+const ListadoGastos = ({ gastos, formatearFecha, setGastoEditar, eliminarGasto }) => {
 
   return (
     <div className="listado-gastos contenedor">
@@ -10,6 +10,8 @@ const ListadoGastos = ({ gastos, formatearFecha }) => {
             key={gasto.id}
             gasto={gasto}
             formatearFecha={formatearFecha}
+            setGastoEditar={setGastoEditar}
+            eliminarGasto={eliminarGasto}
             />
             )
         )}
