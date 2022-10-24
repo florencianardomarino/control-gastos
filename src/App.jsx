@@ -5,11 +5,14 @@ import Modal from "./components/Modal";
 import ListadoGastos from "./components/ListadoGastos";
 
 function App() {
-  const [ presupuesto, setPresupuesto ] = useState(" ");
+  const [ presupuesto, setPresupuesto ] = useState(
+    Number(localStorage.getItem('presupuesto')) ?? ' '
+  );
   const [ isValidPresupuesto, setIsValidPresupuesto ] = useState(false);
   const [ modal, setModal ] = useState(false)
   const [ animarModal, setAnimarModal ] = useState(false)
-  const [ gastos, setGastos ] = useState([])
+  const [ gastos, setGastos ] = useState(
+    localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : []);
   const [ gastoEditar, setGastoEditar] = useState({})
 
   useEffect(()=>{
@@ -20,6 +23,23 @@ function App() {
       }, 500)
     }
   }, [gastoEditar])
+
+  useEffect(()=>{
+    localStorage.setItem('presupuesto', presupuesto ?? ' ')
+  }, [presupuesto])
+
+  useEffect(()=>{
+    const presupuestoLS = Number(localStorage.getItem('presupuesto') ?? ' ');
+
+    if(presupuestoLS > 0 ){
+      setIsValidPresupuesto(true)
+    }
+  },[])
+
+  useEffect(()=>{
+    localStorage.setItem('gastos', JSON.stringify(gastos) ?? []);
+  },[gastos])
+
 
   const formatearFecha = fecha => {
       const fechaNueva = new Date(fecha);
